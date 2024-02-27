@@ -1,0 +1,126 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LR2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            //  z1();
+
+            //  z2();
+            // z3();
+              z4();
+        }
+
+        static void z1()
+        {
+            int n;
+            Console.Write("Введите целое положительное число: ");
+            n = Convert.ToInt32(Console.ReadLine());
+            if (n % 2 == 1)
+            {
+                Console.WriteLine("Число нечетное");
+            }
+            else
+            {
+                Console.WriteLine("Число четное");
+            }
+            Console.WriteLine("\nНажмите любую клавишу для продолжения...");
+            Console.ReadKey(true);
+        }
+        static void z2()
+        {
+            int n;
+            Console.Write("Введите целое положительное число: ");
+            n = Convert.ToInt32(Console.ReadLine());
+            if (n % 2 == 1)
+            {
+                Console.WriteLine("Число нечетное");
+                Console.WriteLine("Число положительное");
+            }
+            if (n % 2 == 0)
+            {
+                Console.WriteLine("Число четное");
+            }
+            if (n < 0)
+            {
+                int z = n * (-1);
+                if (z % 2 == 1)
+                {
+                    Console.WriteLine("Число нечетное");
+                    Console.WriteLine("Число отрицательное");
+                }
+                if (z % 2 == 0)
+                {
+                    Console.WriteLine("Число четное");
+                }
+            }
+            Console.WriteLine("\nНажмите любую клавишу для продолжения...");
+            Console.ReadKey(true);
+        }
+
+        static void z3()
+        {
+            int A = Convert.ToInt32(Console.ReadLine());
+            int x = 0;
+            if (A > 0)
+            {
+                double f = 2 * A * x + (A - x);
+            }
+            else
+            {
+                double f = (Math.Exp(x)) / (Math.Sqrt(1 + Math.Pow(A, 2)));
+            }
+        }
+        static void z4()
+        {
+            while (true)
+            {
+
+                Console.WriteLine("Введите номер месяца: ");
+                string value = Console.ReadLine();
+
+                if (int.TryParse(value, out int result))
+                {
+                    if (result > 0 && result < 13)
+                    {
+                        DateTime d = new DateTime(1, result, 1);
+                        if (result == 12 || result == 1 || result == 2)
+                        {
+                            Console.WriteLine("Зима");
+                        }
+                        if (result == 3 || result == 4 || result == 5)
+                        {
+                            Console.WriteLine("Весна");
+                        }
+                        if (result == 6 || result == 7 || result == 8)
+                        {
+                            Console.WriteLine("Лето");
+                        }
+                        if (result == 9 || result == 10 || result == 11)
+                        {
+                            Console.WriteLine("Осень");
+                        }
+                        Console.WriteLine(d.ToString("MMMM"));
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Введено недопустимое число {value}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"Введено недопустимое число {value}");
+                }
+            }
+
+        }
+    }
+}   
