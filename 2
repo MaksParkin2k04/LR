@@ -129,3 +129,27 @@ namespace LR2
         }
     }
 }
+
+
+
+
+Random rnd = new Random();
+           
+            int[] nums = new int[25];
+
+            for (int x = 0; x < nums.Length; x++)
+            {
+                nums[x] = rnd.Next(-100, 100);
+            }
+            int result = 0;
+            foreach (int x in nums)
+            {
+                if (x > 0)
+                {
+                    result++;
+                }
+            }
+            Console.WriteLine(result);
+            var s = string.Join(" ", nums);
+            Console.WriteLine(s);
+            Console.ReadKey(); 
