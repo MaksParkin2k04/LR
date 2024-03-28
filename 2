@@ -15,8 +15,8 @@ namespace LR2
             //  z1();
 
             //  z2();
-            // z3();
-              z4();
+             z3();
+            // z4();
         }
 
         static void z1()
@@ -68,15 +68,20 @@ namespace LR2
 
         static void z3()
         {
+            Console.WriteLine("Введите А: ");
             int A = Convert.ToInt32(Console.ReadLine());
-            int x = 0;
+            Console.WriteLine("Введите x: ");
+            int x = Convert.ToInt32(Console.ReadLine());
             if (A > 0)
             {
                 double f = 2 * A * x + (A - x);
+                Console.WriteLine(f);
             }
             else
             {
                 double f = (Math.Exp(x)) / (Math.Sqrt(1 + Math.Pow(A, 2)));
+                Console.WriteLine(f);
+
             }
         }
         static void z4()
@@ -123,4 +128,4 @@ namespace LR2
 
         }
     }
-}   
+}
