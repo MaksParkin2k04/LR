@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LR4
+{
+    class Customer
+    {
+        public string LastName { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+        public string CreditCardNumber { get; set; }
+        public string BankAccountNumber { get; set; }
+
+        public Customer(string lastName, string firstName, string middleName, string address, string phone, string creditCardNumber, string bankAccountNumber)
+        {
+            LastName = lastName;
+            FirstName = firstName;
+            MiddleName = middleName;
+            Address = address;
+            Phone = phone;
+            CreditCardNumber = creditCardNumber;
+            BankAccountNumber = bankAccountNumber;
+        }
+
+        public void Set(string lastName, string firstName, string middleName, string address, string phone, string creditCardNumber, string bankAccountNumber)
+        {
+            LastName = lastName;
+            FirstName = firstName;
+            MiddleName = middleName;
+            Address = address;
+            Phone = phone;
+            CreditCardNumber = creditCardNumber;
+            BankAccountNumber = bankAccountNumber;
+        }
+
+        public string Get()
+        {
+            return $"ФИО:{LastName} {FirstName} {MiddleName}, Адрес: {Address}, Телефон: {Phone}, Номер карты: {CreditCardNumber}, Аккаунт банка: {BankAccountNumber}";
+        }
+
+        public void Show()
+        {
+            Console.WriteLine(Get());
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            List<Customer> customers = new List<Customer>
+        {
+            new Customer("Иванов", "Иван", "Иванович", "Москва, Красная площадь", "1234567890", "1111222233334444", "DE1234567890"),
+            new Customer("Петров", "Пётр", "Пётрович", "Санкт-Петербург, Невский", "0987654321", "5555666677778888", "US9876543210"),
+            new Customer("Сидоров", "Сидор", "Сидорович", "Новосибирск, Ленина", "1122334455", "9999000011112222", "RU1029384756"),
+            new Customer("Алексеев", "Алексеей", "Алексеевич", "Орск, Ленина", "3192332155", "999900543856222", "RU1029343756")
+        };
+
+            Console.WriteLine("В алфавитном порядке:");
+            foreach (var customer in customers.OrderBy(c => c.LastName))
+            {
+                customer.Show();
+            }
+
+            // Задание интервала для номеров кредитных карт
+            string startRange = "1000000000000000";
+            string endRange = "9000000000000000";
+
+            Console.WriteLine("\nНомер кредитной карты в заданном интервале:");
+            foreach (var customer in customers.Where(c => string.Compare(c.CreditCardNumber, startRange) >= 0 && string.Compare(c.CreditCardNumber, endRange) <= 0))
+            {
+                customer.Show();
+            }
+        }
+    }
+}
