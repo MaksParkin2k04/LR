@@ -1,0 +1,164 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import sympy as sp
+import math
+
+
+def is_math_function(expression):
+    try:
+        sp.sympify(expression)
+        return True
+    except (sp.SympifyError, TypeError):
+        return False
+
+
+def check_crosses_x_axis(x_vals, y_vals, tol=1e-7):
+    roots = []
+    for i in range(1, len(y_vals)):
+        if y_vals[i - 1] * y_vals[i] < 0 or abs(y_vals[i]) < tol or abs(y_vals[i - 1]) < tol:
+            roots.append((x_vals[i - 1] + x_vals[i]) / 2)
+    return roots
+
+
+def f(x):
+    return sp.lambdify('x', sp.sympify(user_input))(x)
+
+
+def dichotomy_method(f, a, b, tol=1e-5, max_iter=100):
+    if f(a) * f(b) >= 0:
+        print("Метод дихотомии не применим: функция на концах интервала имеет одинаковые знаки.")
+        return None
+
+    iter_count = 0
+    print("Метод дихотомии:")
+    while (b - a) / 2 > tol and iter_count < max_iter:
+        c = (a + b) / 2
+        print(f"Итерация {iter_count}: a = {a}, b = {b}, c = {c}, f(c) = {f(c)}")
+        if f(a) * f(c) < 0:
+            b = c
+        else:
+            a = c
+        iter_count += 1
+
+    result = (a + b) / 2
+    print(f"Метод дихотомии завершен: корень = {result}, количество итераций = {iter_count}")
+    return result
+
+
+def simple_iteration_method(g, x0, tol=1e-5, max_iter=100):
+    iter_count = 0
+    print("Метод простой итерации:")
+    while iter_count < max_iter:
+        x_next = g(x0)
+        if math.isinf(x_next) or math.isnan(x_next):  # Check for infinity or NaN
+            print("Метод простой итерации привел к бесконечности или NaN. Завершение.")
+            return None
+        print(f"Итерация {iter_count}: x0 = {x0}, x_next = {x_next}")
+        if abs(x_next - x0) < tol:
+            print(f"Метод простой итерации завершен: корень = {x_next}, количество итераций = {iter_count}")
+            return x_next
+        x0 = x_next
+        iter_count += 1
+    print("Метод простой итерации не сошелся за максимальное количество итераций")
+    return None
+
+
+def newton_method(user_input, x0, tol=1e-5, max_iter=100):
+    x = sp.symbols('x')
+    func = sp.sympify(user_input)
+    f_prime = sp.diff(func, x)
+    iter_count = 0
+    print("Метод Ньютона:")
+    while iter_count < max_iter:
+        f_prime_val = f_prime.subs(x, x0)
+        if f_prime_val == 0:
+            print("Производная равна нулю, метод Ньютона не применим.")
+            return None
+        x_next = x0 - func.subs(x, x0) / f_prime_val
+        print(
+            f"Итерация {iter_count}: x0 = {x0}, x_next = {x_next}, f(x0) = {func.subs(x, x0)}, f'(x0) = {f_prime_val}")
+        if abs(x_next - x0) < tol:
+            print(f"Метод Ньютона завершен: корень = {x_next}, количество итераций = {iter_count}")
+            return float(x_next)
+        x0 = x_next
+        iter_count += 1
+    print("Метод Ньютона не сошелся за максимальное количество итераций")
+    return None
+
+
+user_input = input("Введите математическую функцию: ")
+
+if is_math_function(user_input):
+    print("Строка является математической функцией.")
+
+    x_vals = np.linspace(-10, 10, 400)
+    y_vals = [f(x_val) for x_val in x_vals]
+    plt.plot(x_vals, y_vals)
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('График функции')
+
+    # Ось y=0
+    plt.axhline(0, color='black', linewidth=2)
+    function_text = f'${user_input}$'
+    plt.text(0.5, 0.5, function_text, fontsize=12)
+
+    plt.grid(True)
+    plt.show()
+
+    # Проверка пересечения графика функции с осью x
+    roots = check_crosses_x_axis(x_vals, y_vals)
+    if roots or abs(f(0)) < 1e-7:
+        if abs(f(0)) < 1e-7 and f(0) not in roots:
+            roots.append(0)
+            print("График функции пересекает ось x в точке x = 0, но ветви имеют одинаковый знак.")
+
+        print("График функции пересекает ось x в точках:", roots)
+
+        # Дополнительные действия
+        dichotomy_roots = []
+        newton_roots = []
+        simple_iteration_roots = []
+
+        for root in roots:
+            a = float(input(f"Введите левый конец интервала для корня {root}: "))
+            b = float(input(f"Введите правый конец интервала для корня {root}: "))
+
+            # Метод дихотомии
+            root_dichotomy = dichotomy_method(f, a, b)
+            if root_dichotomy is not None:
+                print("Метод дихотомии нашел корень:", root_dichotomy)
+                dichotomy_roots.append(root_dichotomy)
+            else:
+                print("Метод дихотомии: корень не найден")
+
+            # Метод Ньютона
+            root_newton = newton_method(user_input, root)
+            if root_newton is not None:
+                print("Метод Ньютона нашел корень:", root_newton)
+                newton_roots.append(root_newton)
+            else:
+                print("Метод Ньютона: корень не найден")
+
+            # Метод простой итерации
+            F_prime = sp.diff(sp.sympify(user_input), 'x')
+            m = 1 / abs(F_prime.subs('x', root))
+            g = lambda x: x - m * f(x)
+
+            root_simple_iteration = simple_iteration_method(g, root)
+            if root_simple_iteration is not None:
+                print("Метод простой итерации нашел корень:", root_simple_iteration)
+                simple_iteration_roots.append(root_simple_iteration)
+            else:
+                print("Метод простой итерации: корень не найден")
+
+        print("\nОбщий ответ:")
+        print("1) Корни по графику:", roots)
+        print("2) Корни по методу дихотомии:", dichotomy_roots)
+        print("3) Корни по методу Ньютона:", newton_roots)
+        print("4) Корни по методу простой итерации:", simple_iteration_roots)
+
+    else:
+        print("График функции не пересекает ось x. Программа завершается.")
+else:
+    print("Строка не является математической функцией.")
