@@ -1,0 +1,7 @@
+C:\Users\carro\Desktop\CarService (1)\CarService\CarService\obj\Debug\net6.0-windows\CarService.csproj.AssemblyReference.cache
+C:\Users\carro\Desktop\CarService (1)\CarService\CarService\obj\Debug\net6.0-windows\CarService.MainForm.resources
+C:\Users\carro\Desktop\CarService (1)\CarService\CarService\obj\Debug\net6.0-windows\CarService.csproj.GenerateResource.cache
+C:\Users\carro\Desktop\CarService (1)\CarService\CarService\obj\Debug\net6.0-windows\CarService.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\carro\Desktop\CarService (1)\CarService\CarService\obj\Debug\net6.0-windows\CarService.AssemblyInfoInputs.cache
+C:\Users\carro\Desktop\CarService (1)\CarService\CarService\obj\Debug\net6.0-windows\CarService.AssemblyInfo.cs
+C:\Users\carro\Desktop\CarService (1)\CarService\CarService\obj\Debug\net6.0-windows\CarService.csproj.CoreCompileInputs.cache
